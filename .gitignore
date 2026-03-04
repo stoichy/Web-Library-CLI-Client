@@ -1,0 +1,26 @@
+# --- Python ---
+__pycache__/
+*.py[cod]
+*$py.class
+.venv/
+venv/
+requirements.txt.log
+
+# --- C / Compilare ---
+# Ignore object files
+*.o
+# Ignore generated executables (names from your structure)
+client
+copy
+# If other executables appear, add them here
+
+# --- IDE & Sistem ---
+.vscode/
+.idea/
+.DS_Store
+*.swp
+
+# --- Distribution ---
+dist/
+build/
+*.egg-info/
