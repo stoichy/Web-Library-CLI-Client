@@ -69,15 +69,15 @@ char* receive_from_server(int sockfd) {
     return buffer.data;
 }
 
-// Extrage valoarea unui cookie
+// Extract the cookie value from the HTTP response
 char* extract_cookie(char* response) {
     if (!response) return NULL;
-    // Gasim pointer-ul la antetul cookie-ului
+    // Find the pointer to the cookie header
     const char *header_start_tag = "Set-Cookie: ";
     const char *header_start = strstr(response, header_start_tag);
     header_start += strlen(header_start_tag);
 
-    // Cautam prima aparitie a lui ';', mai apoi
+    // Find the first occurrence of ';', then
     // stocand valoarea cookie-ului
     const char *end = strchr(header_start, ';');
     size_t length = end - header_start;
@@ -89,29 +89,29 @@ char* extract_cookie(char* response) {
     return value;
 }
 
-// Returneaza un pointer catre corpul unui raspuns HTTPs
+// Return a pointer to the body of an HTTP response
 char* json_body(char* response) {
     char *body_start = strstr(response, "\r\n\r\n") + 4;
     return body_start;
 }
 
-// Gaseste si afiseaza eroarea aflata intr-un obiect JSON
+// Find and display the error contained in a JSON object
 void server_error(const char *json_body) {
-    // Extragem valoarea din cheia "error"
+    // Extract the value from the "error" key
     JSON_Value *root = json_parse_string(json_body);
     JSON_Object *object = json_value_get_object(root);
     const char *error = json_object_get_string(object, "error");
     printf("ERROR: %s\n", error);
 }
 
-// Verificare validitatea datelor
+// Verify the validity of the data
 int valid_info(const char* s) {
-    // Verificam daca sirul e gol
+    // Check if the string is empty
     if (s == NULL || s[0] == '\0') {
         return 0;
     }
 
-    // Verificam daca contine spatii
+    // Check if it contains spaces
     for (int i = 0; s[i] != '\0'; i++) {
         if (s[i] == ' ') {
             return 0;
